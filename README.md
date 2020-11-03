@@ -39,7 +39,7 @@ Nesse projeto, você será capaz de:
   - [API de Trivia](#api-de-trivia)
   - [Gravatar](#gravatar)
   - [Grupos de prioridade](#grupos-de-prioridade)
-  - [Observações técnicas](#observações-tecnicas)
+  - [Observações técnicas](#observações-técnicas)
 - [Lista de requisitos](#lista-de-requisitos)
   - [Tela de início](#tela-de-inicio)
     - [1 - Crie a tela de login, onde a pessoa que joga deve preencher as informações para iniciar um jogo](#1-crie-a-tela-de-login-onde-a-pessoa-que-joga-deve-preencher-as-informações-para-iniciar-um-jogo)
