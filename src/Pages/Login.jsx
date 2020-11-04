@@ -3,12 +3,12 @@ import React from 'react';
 class Login extends React.Component {
 	constructor() {
 		super();
-    
+
 		this.state = {
 			email: '',
       name: '',
 		};
-		
+
     this.handleChange = this.handleChange.bind(this);
 	}
 	
@@ -44,7 +44,7 @@ class Login extends React.Component {
         <button
           type="button"
           data-testid="btn-play"
-          disabled={isEnable}
+          disabled={ isEnable }
         >
           Jogar
         </button>
