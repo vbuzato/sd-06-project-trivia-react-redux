@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { userHash, userInfo, userToken } from '../actions';
 import { connect } from 'react-redux';
 import CryptoJs from 'crypto-js';
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
 	constructor() {
@@ -71,6 +72,7 @@ class Login extends React.Component {
         >
           Jogar
         </button>
+				<Link to="/settings"><button data-testid="btn-settings">Configurações</button></Link>
 			</form>
 		);
 	}
