@@ -41,7 +41,7 @@ class Login extends React.Component {
 	
 	render() {
 		const { name, email } = this.state;
-    const isEnable = (name && email) ? false : true;
+		const isEnable = (name && email) ? false : true;
 		return(
 			<form>
 				<label htmlFor="email">Email do Gravatar:
