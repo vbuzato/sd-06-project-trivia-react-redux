@@ -38,7 +38,7 @@ class Login extends React.Component {
     return (
       <form>
         <label htmlFor="email">
-Email do Gravatar:
+					Email do Gravatar:
           <input
             id="email"
             type="email"
@@ -49,7 +49,7 @@ Email do Gravatar:
           />
         </label>
         <label htmlFor="name">
-Nome do Jogador:
+					Nome do Jogador:
           <input
             id="name"
             type="text"
@@ -67,9 +67,10 @@ Nome do Jogador:
         >
           <Link to="/game">Jogar</Link>
         </button>
-      </form>
-    );
-  }
+				<Link to="/settings"><button data-testid="btn-settings">Configurações</button></Link>
+			</form>
+		);
+	}
 }
 
 const mapDispatchToProps = (dispatch) => ({
