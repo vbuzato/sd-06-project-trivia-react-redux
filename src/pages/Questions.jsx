@@ -85,9 +85,12 @@ class Questions extends React.Component {
 
   render() {
     const { results } = this.props;
+    const { answered } = this.state;
+    const isEnable = !(answered);
     return (
       <div>
         {(results[0]) ? this.question() : 'Loading...'}
+        <button disabled={ isEnable } data-testid="btn-next">Próxima</button>
       </div>
     );
   }
