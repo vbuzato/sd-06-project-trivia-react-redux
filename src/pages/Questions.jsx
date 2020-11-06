@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import { fetchQuestions } from '../actions';
+import Timer from '../components/Timer';
 
 class Questions extends React.Component {
   shuffle(array) {
@@ -29,7 +30,7 @@ class Questions extends React.Component {
         ))}
       </div>
     );
-  }
+	}
 
   question() {
     const { results } = this.props;
@@ -46,12 +47,14 @@ class Questions extends React.Component {
         <h2 data-testid="question-category">{`Category: ${results[0].category}`}</h2>
         <h3 data-testid="question-text">{`Question: ${results[0].question}`}</h3>
         {this.alternatives(answers, results)}
+				<Timer />
       </>
     );
   }
 
   render() {
-    const { results } = this.props;
+		const { results } = this.props;
+		console.log(this.props)
     return (
       <div>
         {(results[0]) ? this.question() : 'Loading...'}
