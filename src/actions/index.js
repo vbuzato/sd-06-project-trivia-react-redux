@@ -1,8 +1,10 @@
 export const ADD_USER = 'ADD_USER';
 export const USER_HASH = 'USER_HASH';
 export const USER_TOKEN = 'USER_TOKEN';
+export const NEW_QUESTIONS = 'NEW_QUESTIONS';
 
 const tokenAPI = 'https://opentdb.com/api_token.php?command=request';
+const questionsAPI = 'https://opentdb.com/api.php?amount=5&token=';
 
 export const userInfo = (name, email) => ({
   type: ADD_USER,
@@ -15,12 +17,16 @@ export const userHash = (hash) => ({
   hash,
 });
 
-// const avatarGravatar = 'https://www.gravatar.com/avatar/';
+export const questions = (results) => ({
+  type: NEW_QUESTIONS,
+  results,
+});
 
-// export const avatar = hash =>
-//   fetch(`${avatarGravatar}${hash}`).then(response =>
-//     response.json().then(result => (result.ok ? Promise.resolve(result) : Promise.reject(result))),
-//   );
+export const fetchQuestions = (token) => async (dispatch) => {
+  const requestQuestions = await fetch(`${questionsAPI}${token}`);
+  const results = await requestQuestions.json();
+  return dispatch(questions(results));
+};
 
 export const userToken = (token) => ({
   type: USER_TOKEN,
@@ -31,5 +37,6 @@ export const fetchToken = () => async (dispatch) => {
   const requestToken = await fetch(tokenAPI);
   const token = await requestToken.json();
   localStorage.setItem('token', token.token);
-  return dispatch(userToken(token.token));
+  await dispatch(userToken(token.token));
+  return dispatch(fetchQuestions(token.token));
 };
