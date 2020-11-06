@@ -4,11 +4,35 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import { fetchQuestions } from '../actions';
 import Timer from '../components/Timer';
+import './Questions.css';
 
 class Questions extends React.Component {
-  shuffle(array) {
-    const FIFTY_PERCENT = 0.5;
-    return array.sort(() => Math.random() - FIFTY_PERCENT); // https://javascript.info/task/shuffle
+  constructor() {
+    super();
+    this.myChoice = this.myChoice.bind(this);
+
+    this.state = {
+      // questionNumber: 1,
+      answered: false,
+      isShuffle: false,
+      shuffledAnswers: [],
+    };
+  }
+
+  myChoice() {
+    this.setState({
+      answered: true,
+    });
+  }
+
+  class(answer) {
+    const { answered } = this.state;
+    const { results } = this.props;
+    let buttonClass = 'answer';
+    if (answered) {
+      buttonClass = (answer === results[0].correct_answer) ? 'correct' : 'incorrect';
+    }
+    return buttonClass;
   }
 
   alternatives(answers, results) {
@@ -19,11 +43,14 @@ class Questions extends React.Component {
           <button
             key={ index }
             type="button"
+            value={ answer }
+            className={ this.class(answer) }
             data-testid={
               (answer === results[0].correct_answer)
                 ? 'correct-answer'
                 : `wrong-answer-${dataIdIndex.shift()}`
             }
+            onClick={ this.myChoice }
           >
             { answer }
           </button>
@@ -32,21 +59,27 @@ class Questions extends React.Component {
     );
 	}
 
+  shuffle(array) {
+    const { isShuffle } = this.state;
+    const FIFTY_PERCENT = 0.5;
+    const shuffledAnswers = array.sort(() => Math.random() - FIFTY_PERCENT); // https://javascript.info/task/shuffle
+    if (!isShuffle) this.setState({ shuffledAnswers, isShuffle: true });
+  }
+
   question() {
     const { results } = this.props;
+    const { answered, shuffledAnswers } = this.state;
     const answersBeforeShuffle = [
       results[0].correct_answer,
       ...results[0].incorrect_answers,
     ];
-    console.log(answersBeforeShuffle);
-    const answers = this.shuffle(answersBeforeShuffle);
-    console.log(answers);
+    if (!answered) this.shuffle(answersBeforeShuffle);
     return (
       <>
         <Header />
         <h2 data-testid="question-category">{`Category: ${results[0].category}`}</h2>
         <h3 data-testid="question-text">{`Question: ${results[0].question}`}</h3>
-        {this.alternatives(answers, results)}
+        {this.alternatives(shuffledAnswers, results)}
 				<Timer />
       </>
     );
