@@ -3,21 +3,38 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import { fetchQuestions } from '../actions';
-import Timer from '../components/Timer';
 import './Questions.css';
 
 class Questions extends React.Component {
   constructor() {
     super();
-    this.myChoice = this.myChoice.bind(this);
+		this.myChoice = this.myChoice.bind(this);
+		this.timer = this.timer.bind(this);
 
     this.state = {
       // questionNumber: 1,
       answered: false,
       isShuffle: false,
-      shuffledAnswers: [],
+			shuffledAnswers: [],
+			time: 30,
     };
-  }
+	}
+
+	timer() {
+		setInterval(() => {
+			const { time } = this.state;
+			this.setState((prev) => ({
+				time: prev.time - 1,
+			}));
+			if(time >= 0) {
+				clearInterval(time)
+			}
+		}, 1000)
+	}
+	
+	componentDidMount() {
+		this.timer()
+	}
 
   myChoice() {
     this.setState({
@@ -80,12 +97,12 @@ class Questions extends React.Component {
         <h2 data-testid="question-category">{`Category: ${results[0].category}`}</h2>
         <h3 data-testid="question-text">{`Question: ${results[0].question}`}</h3>
         {this.alternatives(shuffledAnswers, results)}
-				<Timer />
+				<p>{this.state.time}</p>
       </>
     );
   }
 
-  render() {
+  render () {
 		const { results } = this.props;
 		console.log(this.props)
     return (
