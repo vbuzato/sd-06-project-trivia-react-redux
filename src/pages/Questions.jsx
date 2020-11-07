@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import { fetchQuestions } from '../actions';
 import './Questions.css';
 
-const INITIAL_TIME = 10;
+const INITIAL_TIME = 30;
 
 class Questions extends React.Component {
   constructor() {
@@ -23,14 +23,9 @@ class Questions extends React.Component {
     };
   }
 
-  // intervalID = 0;
-
   componentDidMount() {
     const { questionNumber } = this.state;
     if (questionNumber === 0) this.startTimer();
-    // const ONE_SECOND = 1000;
-    // this.intervalID = setInterval(this.timer, ONE_SECOND);
-    // this.timer();
   }
 
   timer() {
@@ -44,20 +39,6 @@ class Questions extends React.Component {
         time: prev.time - 1,
       }));
     }
-    // const ONE_SECOND = 1000;
-    // setInterval(() => {
-    //   const { time } = this.state;
-
-    //   if (time === 0) {
-    //     this.setState({
-    //       answered: true,
-    //     });
-    //   } else {
-    //     this.setState((prev) => ({
-    //       time: prev.time - 1,
-    //     }));
-    //   }
-    // }, ONE_SECOND);
   }
 
   myChoice() {
