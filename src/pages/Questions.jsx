@@ -18,13 +18,13 @@ class Questions extends React.Component {
       answered: false,
       isShuffle: false,
 			shuffledAnswers: [],
-			time: 30,
+      time: 30,
     };
 	}
 
 	timer() {
 		setInterval(() => {
-			const { time } = this.state;
+			const { time, clear } = this.state;
 			this.setState((prev) => ({
 				time: prev.time - 1,
 			}));
@@ -36,7 +36,7 @@ class Questions extends React.Component {
 	
 	componentDidMount() {
 		this.timer()
-	}
+  }
 
   myChoice() {
     this.setState({
@@ -114,7 +114,6 @@ class Questions extends React.Component {
 
   nextQuestion() {
     const { questionNumber, time } = this.state;
-    clearInterval(time);
     this.setState({
       questionNumber: questionNumber + 1,
       answered: false,
@@ -139,7 +138,7 @@ class Questions extends React.Component {
           data-testid="btn-next"
           onClick={ this.nextQuestion }
         >
-            Próxima
+          Próxima
         </button>
       </div>
     );
