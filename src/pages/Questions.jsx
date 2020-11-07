@@ -9,15 +9,33 @@ import './Questions.css';
 class Questions extends React.Component {
   constructor() {
     super();
-    this.myChoice = this.myChoice.bind(this);
+		this.myChoice = this.myChoice.bind(this);
+		this.timer = this.timer.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
     this.state = {
       // questionNumber: ((prev) => prev + 1),
       questionNumber: 0,
       answered: false,
       isShuffle: false,
-      shuffledAnswers: [],
+			shuffledAnswers: [],
+      time: 30,
     };
+	}
+
+	timer() {
+		setInterval(() => {
+			const { time, clear } = this.state;
+			this.setState((prev) => ({
+				time: prev.time - 1,
+			}));
+			if(time >= 0) {
+				clearInterval(time)
+			}
+		}, 1000)
+	}
+	
+	componentDidMount() {
+		this.timer()
   }
 
   myChoice() {
@@ -49,6 +67,7 @@ class Questions extends React.Component {
             type="button"
             value={ answer }
             className={ this.class(answer) }
+            disabled={this.state.time <= 0 ? true : false}
             data-testid={
               (answer === results[questionNumber].correct_answer)
                 ? 'correct-answer'
@@ -61,7 +80,7 @@ class Questions extends React.Component {
         ))}
       </div>
     );
-  }
+	}
 
   shuffle(array) {
     const { isShuffle } = this.state;
@@ -88,17 +107,18 @@ class Questions extends React.Component {
           {`Question: ${results[questionNumber].question}`}
         </h3>
         {this.alternatives(shuffledAnswers, results)}
+				<p>{this.state.time}</p>
       </>
     );
   }
 
   nextQuestion() {
-    const { questionNumber } = this.state;
+    const { questionNumber, time } = this.state;
     this.setState({
       questionNumber: questionNumber + 1,
       answered: false,
       isShuffle: false,
-    });
+    }); 
   }
 
   render() {
@@ -118,7 +138,7 @@ class Questions extends React.Component {
           data-testid="btn-next"
           onClick={ this.nextQuestion }
         >
-            Próxima
+          Próxima
         </button>
       </div>
     );
