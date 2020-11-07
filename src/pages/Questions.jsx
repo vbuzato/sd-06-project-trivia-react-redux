@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import { fetchQuestions } from '../actions';
 import './Questions.css';
@@ -9,9 +10,10 @@ class Questions extends React.Component {
   constructor() {
     super();
     this.myChoice = this.myChoice.bind(this);
-
+    this.nextQuestion = this.nextQuestion.bind(this);
     this.state = {
-      questionNumber: ((prev) => prev + 1),
+      // questionNumber: ((prev) => prev + 1),
+      questionNumber: 0,
       answered: false,
       isShuffle: false,
       shuffledAnswers: [],
@@ -25,17 +27,20 @@ class Questions extends React.Component {
   }
 
   class(answer) {
-    const { answered } = this.state;
+    const { answered, questionNumber } = this.state;
     const { results } = this.props;
     let buttonClass = 'answer';
     if (answered) {
-      buttonClass = (answer === results[0].correct_answer) ? 'correct' : 'incorrect';
+      buttonClass = (answer === results[questionNumber].correct_answer)
+        ? 'correct'
+        : 'incorrect';
     }
     return buttonClass;
   }
 
   alternatives(answers, results) {
     const dataIdIndex = [0, 1, 2];
+    const { questionNumber } = this.state;
     return (
       <div>
         {answers.map((answer, index) => (
@@ -45,7 +50,7 @@ class Questions extends React.Component {
             value={ answer }
             className={ this.class(answer) }
             data-testid={
-              (answer === results[0].correct_answer)
+              (answer === results[questionNumber].correct_answer)
                 ? 'correct-answer'
                 : `wrong-answer-${dataIdIndex.shift()}`
             }
@@ -67,31 +72,54 @@ class Questions extends React.Component {
 
   question() {
     const { results } = this.props;
-    const { answered, shuffledAnswers } = this.state;
+    const { answered, shuffledAnswers, questionNumber } = this.state;
     const answersBeforeShuffle = [
-      results[0].correct_answer,
-      ...results[0].incorrect_answers,
+      results[questionNumber].correct_answer,
+      ...results[questionNumber].incorrect_answers,
     ];
     if (!answered) this.shuffle(answersBeforeShuffle);
     return (
       <>
         <Header />
-        <h2 data-testid="question-category">{`Category: ${results[0].category}`}</h2>
-        <h3 data-testid="question-text">{`Question: ${results[0].question}`}</h3>
+        <h2 data-testid="question-category">
+          {`Category: ${results[questionNumber].category}`}
+        </h2>
+        <h3 data-testid="question-text">
+          {`Question: ${results[questionNumber].question}`}
+        </h3>
         {this.alternatives(shuffledAnswers, results)}
       </>
     );
   }
 
+  nextQuestion() {
+    const { questionNumber } = this.state;
+    this.setState({
+      questionNumber: questionNumber + 1,
+      answered: false,
+      isShuffle: false,
+    });
+  }
+
   render() {
     const { results } = this.props;
-    const { answered } = this.state;
+    const { answered, questionNumber } = this.state;
     const isEnable = !(answered);
     const hidden = !(answered);
+    const NUMBER_OF_QUESTIONS = 5;
     return (
       <div>
-        {(results[0]) ? this.question() : 'Loading...'}
-        <button disabled={ isEnable } hidden={ hidden } data-testid="btn-next">Próxima</button>
+        {(questionNumber === NUMBER_OF_QUESTIONS) ? <Redirect to="/feedback" /> : null}
+        {(results[questionNumber]) ? this.question() : 'Loading...'}
+        <button
+          type="button"
+          disabled={ isEnable }
+          hidden={ hidden }
+          data-testid="btn-next"
+          onClick={ this.nextQuestion }
+        >
+            Próxima
+        </button>
       </div>
     );
   }
