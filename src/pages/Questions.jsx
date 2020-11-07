@@ -6,39 +6,62 @@ import Header from '../components/Header';
 import { fetchQuestions } from '../actions';
 import './Questions.css';
 
+const INITIAL_TIME = 10;
+
 class Questions extends React.Component {
   constructor() {
     super();
-		this.myChoice = this.myChoice.bind(this);
-		this.timer = this.timer.bind(this);
+    this.myChoice = this.myChoice.bind(this);
+    this.timer = this.timer.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
     this.state = {
-      // questionNumber: ((prev) => prev + 1),
       questionNumber: 0,
       answered: false,
       isShuffle: false,
-			shuffledAnswers: [],
-      time: 30,
+      shuffledAnswers: [],
+      time: INITIAL_TIME,
     };
-	}
+  }
 
-	timer() {
-		setInterval(() => {
-			const { time, clear } = this.state;
-			this.setState((prev) => ({
-				time: prev.time - 1,
-			}));
-			if(time >= 0) {
-				clearInterval(time)
-			}
-		}, 1000)
-	}
-	
-	componentDidMount() {
-		this.timer()
+  // intervalID = 0;
+
+  componentDidMount() {
+    const { questionNumber } = this.state;
+    if (questionNumber === 0) this.startTimer();
+    // const ONE_SECOND = 1000;
+    // this.intervalID = setInterval(this.timer, ONE_SECOND);
+    // this.timer();
+  }
+
+  timer() {
+    const { time } = this.state;
+    if (time === 0) {
+      this.setState({
+        answered: true,
+      });
+    } else {
+      this.setState((prev) => ({
+        time: prev.time - 1,
+      }));
+    }
+    // const ONE_SECOND = 1000;
+    // setInterval(() => {
+    //   const { time } = this.state;
+
+    //   if (time === 0) {
+    //     this.setState({
+    //       answered: true,
+    //     });
+    //   } else {
+    //     this.setState((prev) => ({
+    //       time: prev.time - 1,
+    //     }));
+    //   }
+    // }, ONE_SECOND);
   }
 
   myChoice() {
+    clearInterval(this.intervalID);
     this.setState({
       answered: true,
     });
@@ -58,7 +81,7 @@ class Questions extends React.Component {
 
   alternatives(answers, results) {
     const dataIdIndex = [0, 1, 2];
-    const { questionNumber } = this.state;
+    const { questionNumber, time } = this.state;
     return (
       <div>
         {answers.map((answer, index) => (
@@ -67,7 +90,7 @@ class Questions extends React.Component {
             type="button"
             value={ answer }
             className={ this.class(answer) }
-            disabled={this.state.time <= 0 ? true : false}
+            disabled={ time <= 0 }
             data-testid={
               (answer === results[questionNumber].correct_answer)
                 ? 'correct-answer'
@@ -80,7 +103,7 @@ class Questions extends React.Component {
         ))}
       </div>
     );
-	}
+  }
 
   shuffle(array) {
     const { isShuffle } = this.state;
@@ -91,7 +114,7 @@ class Questions extends React.Component {
 
   question() {
     const { results } = this.props;
-    const { answered, shuffledAnswers, questionNumber } = this.state;
+    const { answered, shuffledAnswers, questionNumber, time } = this.state;
     const answersBeforeShuffle = [
       results[questionNumber].correct_answer,
       ...results[questionNumber].incorrect_answers,
@@ -107,18 +130,25 @@ class Questions extends React.Component {
           {`Question: ${results[questionNumber].question}`}
         </h3>
         {this.alternatives(shuffledAnswers, results)}
-				<p>{this.state.time}</p>
+        <p>{time}</p>
       </>
     );
   }
 
+  startTimer() {
+    const ONE_SECOND = 1000;
+    this.intervalID = setInterval(this.timer, ONE_SECOND);
+  }
+
   nextQuestion() {
-    const { questionNumber, time } = this.state;
+    const { questionNumber } = this.state;
     this.setState({
       questionNumber: questionNumber + 1,
       answered: false,
       isShuffle: false,
-    }); 
+      time: INITIAL_TIME,
+    });
+    this.startTimer();
   }
 
   render() {
