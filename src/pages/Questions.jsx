@@ -62,6 +62,7 @@ class Questions extends React.Component {
             type="button"
             value={ answer }
             className={ this.class(answer) }
+            disabled={this.state.time <= 0 ? true : false}
             data-testid={
               (answer === results[0].correct_answer)
                 ? 'correct-answer'
