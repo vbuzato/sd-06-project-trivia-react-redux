@@ -11,7 +11,7 @@ class Questions extends React.Component {
     this.myChoice = this.myChoice.bind(this);
 
     this.state = {
-      // questionNumber: 1,
+      questionNumber: ((prev) => prev + 1),
       answered: false,
       isShuffle: false,
       shuffledAnswers: [],
@@ -87,10 +87,11 @@ class Questions extends React.Component {
     const { results } = this.props;
     const { answered } = this.state;
     const isEnable = !(answered);
+    const hidden = !(answered);
     return (
       <div>
         {(results[0]) ? this.question() : 'Loading...'}
-        <button disabled={ isEnable } data-testid="btn-next">Próxima</button>
+        <button disabled={ isEnable } hidden={ hidden } data-testid="btn-next">Próxima</button>
       </div>
     );
   }
