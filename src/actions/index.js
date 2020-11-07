@@ -2,6 +2,7 @@ export const ADD_USER = 'ADD_USER';
 export const USER_HASH = 'USER_HASH';
 export const USER_TOKEN = 'USER_TOKEN';
 export const NEW_QUESTIONS = 'NEW_QUESTIONS';
+export const SUM_POINTS = 'SUM_POINTS';
 
 const tokenAPI = 'https://opentdb.com/api_token.php?command=request';
 const questionsAPI = 'https://opentdb.com/api.php?amount=5&token=';
@@ -40,3 +41,8 @@ export const fetchToken = () => async (dispatch) => {
   await dispatch(userToken(token.token));
   return dispatch(fetchQuestions(token.token));
 };
+
+export const sumNewPoints = (score) => ({
+  type: SUM_POINTS,
+  score,
+});
