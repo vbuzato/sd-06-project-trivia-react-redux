@@ -1,60 +1,83 @@
 import React from 'react';
-import Header from '../components/Header';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import Header from '../components/Header';
 
 class Feedback extends React.Component {
-  constructor() {
-    super();
+  // constructor() {
+  //   super();
 
-    this.feedScore = this.feedScore.bind(this);
+  //   this.feedScore = this.feedScore.bind(this);
 
-    this.state = {
-      hits: 3,
-      score: 0,
-    }
-  }
+  //   this.state = {
+  //     hits: 3,
+  //     score: 0,
+  //   };
+  // }
 
-  componentDidMount() {
-    const { hits } = this.state;
-    this.setState({
-      score: hits * 10,
-    })
-  }
+  // componentDidMount() {
+  //   const { hits } = this.state;
+  //   this.setState({
+  //     score: hits * 10,
+  //   });
+  // }
 
   feedScore() {
-    const { score } = this.state;
-    if(score <= 30) {
+    const { assertions } = this.props;
+    const MIN_QUESTIONS = 3;
+    if (assertions < MIN_QUESTIONS) {
       return (
         <h1 data-testid="feedback-text">Podia ser melhor...</h1>
-      )
-    } else {
-      return (
-        <h1 data-testid="feedback-text">Mandou bem!</h1>
-      )
+      );
     }
+    return (
+      <h1 data-testid="feedback-text">Mandou bem!</h1>
+    );
   }
 
   render() {
-    const { hits, score } = this.state;
+    const { assertions, score } = this.props;
     return (
       <div>
         <div>
           <Header />
         </div>
-        <div data-testid="feedback-total-score">
+        <div>
           {this.feedScore()}
-          <h3
-            data-testid="feedback-total-question"
-          >
-            Você acertou {hits} questões!<br/>
-            Um total de {score} pontos
+          <h3>
+            Você acertou
+            {' '}
+            <span data-testid="feedback-total-question">{assertions}</span>
+            {' '}
+            questões!
+            <br />
+            Um total de
+            {' '}
+            <span data-testid="feedback-total-score">{score}</span>
+            {' '}
+            pontos
           </h3>
         </div>
-        <Link to="/ranking"><button data-testid="btn-ranking">VER RANKING</button></Link>
-        <Link to="/"><button data-testid="btn-play-again">JOGAR NOVAMENTE</button></Link>
+        <Link to="/ranking">
+          <button type="button" data-testid="btn-ranking">VER RANKING</button>
+        </Link>
+        <Link to="/">
+          <button type="button" data-testid="btn-play-again">JOGAR NOVAMENTE</button>
+        </Link>
       </div>
     );
   }
 }
 
-export default Feedback;
+const mapStateToProps = (state) => ({
+  score: state.game.score,
+  assertions: state.game.assertions,
+});
+
+Feedback.propTypes = {
+  score: PropTypes.number.isRequired,
+  assertions: PropTypes.number.isRequired,
+};
+
+export default connect(mapStateToProps)(Feedback);
