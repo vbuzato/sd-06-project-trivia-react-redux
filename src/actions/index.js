@@ -5,9 +5,12 @@ export const NEW_QUESTIONS = 'NEW_QUESTIONS';
 export const SUM_POINTS = 'SUM_POINTS';
 export const RESET_GAME = 'RESET_GAME';
 export const ADD_RANKING = 'ADD_RANKING';
+export const ADD_CATEGORIES = 'ADD_CATEGORIES';
+export const SAVE_SETTINGS = 'SAVE_SETTINGS';
 
 const tokenAPI = 'https://opentdb.com/api_token.php?command=request';
 const questionsAPI = 'https://opentdb.com/api.php?amount=5&token=';
+const categoriesAPI = 'https://opentdb.com/api_category.php';
 
 export const userInfo = (name, email) => ({
   type: ADD_USER,
@@ -57,4 +60,24 @@ export const addRanking = (name, hash) => ({
   type: ADD_RANKING,
   name,
   hash,
+});
+
+export const addCategories = (categories) => ({
+  type: ADD_CATEGORIES,
+  categories,
+});
+
+export const fetchCategories = () => async (dispatch) => {
+  const requestCategories = await fetch(categoriesAPI);
+  const categoriesObject = await requestCategories.json();
+  const categories = categoriesObject.trivia_categories.map((category) => category.name);
+  console.log(categories);
+  return dispatch(addCategories(categories));
+};
+
+export const saveSettings = (category, difficulty, alternativesType) => ({
+  type: SAVE_SETTINGS,
+  category,
+  difficulty,
+  alternativesType,
 });

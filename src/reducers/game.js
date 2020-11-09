@@ -1,10 +1,26 @@
-import { NEW_QUESTIONS, SUM_POINTS, RESET_GAME, ADD_RANKING } from '../actions';
+import { NEW_QUESTIONS,
+  SUM_POINTS,
+  RESET_GAME,
+  ADD_RANKING,
+  ADD_CATEGORIES,
+  SAVE_SETTINGS,
+} from '../actions';
 
 const INITIAL_STATE = {
   results: [],
   score: 0,
   assertions: 0,
   ranking: [],
+  settings: {
+    category: 'Any Category',
+    difficulty: 'Any Difficulty',
+    type: 'Any Type',
+  },
+  options: {
+    categories: ['Loading...'],
+    difficulty: ['Any Difficulty', 'Easy', 'Medium', 'Hard'],
+    type: ['Any Type', 'Multiple Choice', 'True / False'],
+  },
 };
 
 function game(state = INITIAL_STATE, action) {
@@ -19,6 +35,23 @@ function game(state = INITIAL_STATE, action) {
     };
   case RESET_GAME:
     return { ...state, score: 0, assertions: 0, results: [] };
+  case ADD_CATEGORIES:
+    return {
+      ...state,
+      options: {
+        ...state.options,
+        categories: ['Any Category', ...action.categories],
+      },
+    };
+  case SAVE_SETTINGS:
+    return {
+      ...state,
+      settings: {
+        category: action.category,
+        difficulty: action.difficulty,
+        type: action.alternativesType,
+      },
+    };
   case ADD_RANKING:
     return { ...state,
       ranking: [
