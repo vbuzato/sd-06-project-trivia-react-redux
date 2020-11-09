@@ -3,25 +3,13 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
+import { resetGame, addRanking } from '../actions';
 
 class Feedback extends React.Component {
-  // constructor() {
-  //   super();
-
-  //   this.feedScore = this.feedScore.bind(this);
-
-  //   this.state = {
-  //     hits: 3,
-  //     score: 0,
-  //   };
-  // }
-
-  // componentDidMount() {
-  //   const { hits } = this.state;
-  //   this.setState({
-  //     score: hits * 10,
-  //   });
-  // }
+  componentDidMount() {
+    const { ranking, name, hash } = this.props;
+    ranking(name, hash);
+  }
 
   feedScore() {
     const { assertions } = this.props;
@@ -37,7 +25,7 @@ class Feedback extends React.Component {
   }
 
   render() {
-    const { assertions, score } = this.props;
+    const { assertions, score, reset } = this.props;
     return (
       <div>
         <div>
@@ -60,10 +48,22 @@ class Feedback extends React.Component {
           </h3>
         </div>
         <Link to="/ranking">
-          <button type="button" data-testid="btn-ranking">VER RANKING</button>
+          <button
+            type="button"
+            data-testid="btn-ranking"
+            onClick={ reset }
+          >
+            VER RANKING
+          </button>
         </Link>
         <Link to="/">
-          <button type="button" data-testid="btn-play-again">JOGAR NOVAMENTE</button>
+          <button
+            type="button"
+            data-testid="btn-play-again"
+            onClick={ reset }
+          >
+           JOGAR NOVAMENTE
+          </button>
         </Link>
       </div>
     );
@@ -73,11 +73,22 @@ class Feedback extends React.Component {
 const mapStateToProps = (state) => ({
   score: state.game.score,
   assertions: state.game.assertions,
+  name: state.user.name,
+  hash: state.token.hash,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  reset: () => dispatch(resetGame()),
+  ranking: (name, hash) => dispatch(addRanking(name, hash)),
 });
 
 Feedback.propTypes = {
   score: PropTypes.number.isRequired,
   assertions: PropTypes.number.isRequired,
+  reset: PropTypes.func.isRequired,
+  ranking: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  hash: PropTypes.string.isRequired,
 };
 
-export default connect(mapStateToProps)(Feedback);
+export default connect(mapStateToProps, mapDispatchToProps)(Feedback);
