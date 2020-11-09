@@ -14,6 +14,8 @@ class Questions extends React.Component {
     this.myChoice = this.myChoice.bind(this);
     this.timer = this.timer.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
+    this.resetState = this.resetState.bind(this);
+
     this.state = {
       questionNumber: 0,
       answered: false,
@@ -167,6 +169,16 @@ class Questions extends React.Component {
     this.startTimer();
   }
 
+  resetState() {
+    this.setState({
+      questionNumber: 0,
+      answered: false,
+      isShuffle: false,
+      shuffledAnswers: [],
+      time: INITIAL_TIME,
+    });
+  }
+
   render() {
     const { results } = this.props;
     const { answered, questionNumber } = this.state;
@@ -174,6 +186,7 @@ class Questions extends React.Component {
     return (
       <div>
         {(questionNumber === NUMBER_OF_QUESTIONS) ? <Redirect to="/feedback" /> : null}
+        {(questionNumber === NUMBER_OF_QUESTIONS) ? this.resetState() : null}
         {(results[questionNumber]) ? this.question() : 'Loading...'}
         <button
           type="button"
