@@ -15,7 +15,7 @@ class Ranking extends React.Component {
             <div key={ index } className="wrap-player-ranking">
               <img src={ eachRanking.picture } alt="esquilo" className="img-ranking" />
               <p data-testid={ `player-name-${index}` }>{eachRanking.name}</p>
-              <p data-testid={ `player-score-${index}` }>{eachRanking.score}</p>
+              <p className="rank-score" data-testid={ `player-score-${index}` }>{eachRanking.score}</p>
             </div>
           ))}
         <Link to="/">

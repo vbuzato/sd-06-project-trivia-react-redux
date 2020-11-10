@@ -63,3 +63,7 @@ select {
 .buttons_settings {
   margin-top: 20px;
 }
+
+.rank-score{
+  min-width: 80px;
+}
