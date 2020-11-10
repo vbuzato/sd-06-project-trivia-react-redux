@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import CryptoJs from 'crypto-js';
 import { Link } from 'react-router-dom';
+import './Login.css';
+import { GoSettings } from 'react-icons/go';
+import { AiFillPlayCircle } from 'react-icons/ai';
 import { userHash, userInfo, fetchToken } from '../actions';
 
 class Login extends React.Component {
@@ -35,47 +38,60 @@ class Login extends React.Component {
   render() {
     const { name, email } = this.state;
     const isEnable = !((name && email));
+    let disabled = '';
+    if (isEnable) disabled = 'disabled';
     return (
-      <form>
-        <label htmlFor="email">
+      <div className="form-wrap">
+        <form className="login-form">
+          <div className="wrap-600">
+            <h1>Trivia Game</h1>
+            <label htmlFor="email">
           Email do Gravatar:
-          <input
-            id="email"
-            type="email"
-            name="email"
-            value={ email }
-            data-testid="input-gravatar-email"
-            onChange={ this.handleChange }
-          />
-        </label>
-        <label htmlFor="name">
+              <input
+                id="email"
+                type="email"
+                name="email"
+                value={ email }
+                data-testid="input-gravatar-email"
+                onChange={ this.handleChange }
+              />
+            </label>
+            <label htmlFor="name">
           Nome do Jogador:
-          <input
-            id="name"
-            type="text"
-            name="name"
-            value={ name }
-            data-testid="input-player-name"
-            onChange={ this.handleChange }
-          />
-        </label>
-        <button
-          type="button"
-          data-testid="btn-play"
-          disabled={ isEnable }
-          onClick={ this.onClick }
-        >
-          <Link to="/game">Jogar</Link>
-        </button>
-        <Link to="/settings">
-          <button
-            type="button"
-            data-testid="btn-settings"
-          >
-          Configurações
-          </button>
-        </Link>
-      </form>
+              <input
+                id="name"
+                type="text"
+                name="name"
+                value={ name }
+                data-testid="input-player-name"
+                onChange={ this.handleChange }
+              />
+            </label>
+            <div>
+              <button
+                type="button"
+                data-testid="btn-play"
+                disabled={ isEnable }
+                onClick={ this.onClick }
+                className="bt_login"
+              >
+                <Link to="/game" className={ `bt-jogar ${disabled}` }>
+                  <AiFillPlayCircle size="50" />
+                </Link>
+              </button>
+              <Link to="/settings">
+                <button
+                  type="button"
+                  data-testid="btn-settings"
+                  className="bt_login"
+                >
+                  <GoSettings size="50" />
+                </button>
+              </Link>
+            </div>
+          </div>
+        </form>
+      </div>
     );
   }
 }

@@ -27,7 +27,7 @@ class Feedback extends React.Component {
   render() {
     const { assertions, score, reset } = this.props;
     return (
-      <div>
+      <div className="content-wrap">
         <div>
           <Header />
         </div>

@@ -7,7 +7,7 @@ class Ranking extends React.Component {
   render() {
     const { ranking } = this.props;
     return (
-      <div>
+      <div className="content-wrap">
         <h1 data-testid="ranking-title">Ranking</h1>
         {ranking
           .sort((a, b) => b.score - a.score)

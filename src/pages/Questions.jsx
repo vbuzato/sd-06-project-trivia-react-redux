@@ -86,7 +86,7 @@ class Questions extends React.Component {
     const dataIdIndex = [0, 1, 2];
     const { questionNumber, answered } = this.state;
     return (
-      <div>
+      <div className="alternatives">
         {answers.map((answer, index) => (
           <button
             key={ index }
@@ -126,12 +126,12 @@ class Questions extends React.Component {
     return (
       <>
         <Header />
-        <h2 data-testid="question-category">
+        <h3 data-testid="question-category">
           {`Category: ${results[questionNumber].category}`}
-        </h2>
-        <h3 data-testid="question-text">
-          {`Question: ${results[questionNumber].question}`}
         </h3>
+        <h2 data-testid="question-text">
+          {`Question: ${results[questionNumber].question}`}
+        </h2>
         {this.alternatives(shuffledAnswers, results)}
         <p>{time}</p>
       </>
@@ -184,7 +184,7 @@ class Questions extends React.Component {
     const { answered, questionNumber } = this.state;
     const NUMBER_OF_QUESTIONS = 5;
     return (
-      <div>
+      <div className="content-wrap">
         {(questionNumber === NUMBER_OF_QUESTIONS) ? <Redirect to="/feedback" /> : null}
         {(questionNumber === NUMBER_OF_QUESTIONS) ? this.resetState() : null}
         {(results[questionNumber]) ? this.question() : 'Loading...'}

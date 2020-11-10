@@ -32,7 +32,7 @@ class Settings extends React.Component {
     const { options, confirm } = this.props;
     const { category, difficulty, type } = this.state;
     return (
-      <div>
+      <div className="content-wrap">
         <h1 data-testid="settings-title">CONFIGURAÇÕES</h1>
         <label htmlFor="categories">
           <select id="category" onChange={ this.handleChange } value={ category }>
