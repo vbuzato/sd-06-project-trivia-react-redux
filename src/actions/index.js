@@ -9,7 +9,7 @@ export const ADD_CATEGORIES = 'ADD_CATEGORIES';
 export const SAVE_SETTINGS = 'SAVE_SETTINGS';
 
 const tokenAPI = 'https://opentdb.com/api_token.php?command=request';
-const questionsAPI = 'https://opentdb.com/api.php?amount=5&token=';
+const questionsAPI = 'https://opentdb.com/api.php?amount=5';
 const categoriesAPI = 'https://opentdb.com/api_category.php';
 
 export const userInfo = (name, email) => ({
@@ -28,8 +28,17 @@ export const questions = (results) => ({
   results,
 });
 
-export const fetchQuestions = (token) => async (dispatch) => {
-  const requestQuestions = await fetch(`${questionsAPI}${token}`);
+export const fetchQuestions = (token) => async (dispatch, getState) => {
+  const categorySetting = (getState().game.settings.category === 'Any Category')
+    ? '' : `&category=${getState().game.settings.category}`;
+  const difficultySetting = (getState().game.settings.difficulty === 'Any Difficulty')
+    ? '' : `&difficulty=${getState().game.settings.difficulty}`;
+  const typeSetting = (getState().game.settings.type === 'Any Type')
+    ? '' : `&type=${getState().game.settings.type}`;
+
+  const requestQuestions = await fetch(`
+    ${questionsAPI}${categorySetting}${difficultySetting}${typeSetting}&token=${token}
+  `);
   const results = await requestQuestions.json();
   return dispatch(questions(results));
 };
@@ -70,7 +79,7 @@ export const addCategories = (categories) => ({
 export const fetchCategories = () => async (dispatch) => {
   const requestCategories = await fetch(categoriesAPI);
   const categoriesObject = await requestCategories.json();
-  const categories = categoriesObject.trivia_categories.map((category) => category.name);
+  const categories = categoriesObject.trivia_categories.map((category) => category);
   console.log(categories);
   return dispatch(addCategories(categories));
 };

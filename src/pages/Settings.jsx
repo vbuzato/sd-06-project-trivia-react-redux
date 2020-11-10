@@ -5,15 +5,15 @@ import PropTypes from 'prop-types';
 import { saveSettings, fetchCategories } from '../actions';
 
 class Settings extends React.Component {
-  constructor() {
-    super();
-
+  constructor(props) {
+    super(props);
+    const { category, difficulty, type } = props;
     this.handleChange = this.handleChange.bind(this);
 
     this.state = {
-      category: 'Any Category',
-      difficulty: 'Any Difficulty',
-      type: 'Any Type',
+      category,
+      difficulty,
+      type,
     };
   }
 
@@ -37,24 +37,24 @@ class Settings extends React.Component {
         <label htmlFor="categories">
           <select id="category" onChange={ this.handleChange } value={ category }>
             {options.categories.map((item) => (
-              <option key={ item } value={ item }>
-                { item }
+              <option key={ item.id } value={ item.id }>
+                { item.name }
               </option>))}
           </select>
         </label>
         <label htmlFor="difficulty">
           <select id="difficulty" onChange={ this.handleChange } value={ difficulty }>
             {options.difficulty.map((item) => (
-              <option key={ item } value={ item }>
-                { item }
+              <option key={ item.id } value={ item.id }>
+                { item.name }
               </option>))}
           </select>
         </label>
         <label htmlFor="type">
           <select id="type" onChange={ this.handleChange } value={ type }>
             {options.type.map((item) => (
-              <option key={ item } value={ item }>
-                { item }
+              <option key={ item.id } value={ item.id }>
+                { item.name }
               </option>))}
           </select>
         </label>
@@ -69,17 +69,24 @@ class Settings extends React.Component {
 
 const mapStateToProps = (state) => ({
   options: state.game.options,
+  category: state.game.settings.category,
+  difficulty: state.game.settings.difficulty,
+  type: state.game.settings.type,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   requestCategories: () => dispatch(fetchCategories()),
-  confirm: (category, difficulty, type) => dispatch(saveSettings(category, difficulty, type)),
+  confirm: (category, difficulty, type) => (
+    dispatch(saveSettings(category, difficulty, type))),
 });
 
 Settings.propTypes = {
   options: PropTypes.objectOf().isRequired,
   requestCategories: PropTypes.func.isRequired,
   confirm: PropTypes.func.isRequired,
+  category: PropTypes.string.isRequired,
+  difficulty: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

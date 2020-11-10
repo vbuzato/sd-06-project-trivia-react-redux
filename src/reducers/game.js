@@ -18,8 +18,15 @@ const INITIAL_STATE = {
   },
   options: {
     categories: ['Loading...'],
-    difficulty: ['Any Difficulty', 'Easy', 'Medium', 'Hard'],
-    type: ['Any Type', 'Multiple Choice', 'True / False'],
+    difficulty: [
+      { id: 0, name: 'Any Difficulty' },
+      { id: 'easy', name: 'Easy' },
+      { id: 'medium', name: 'Medium' },
+      { id: 'hard', name: 'Hard' }],
+    type: [
+      { id: 0, name: 'Any Type' },
+      { id: 'multiple', name: 'Multiple Choice' },
+      { id: 'boolean', name: 'True / False' }],
   },
 };
 
@@ -40,7 +47,7 @@ function game(state = INITIAL_STATE, action) {
       ...state,
       options: {
         ...state.options,
-        categories: ['Any Category', ...action.categories],
+        categories: [{ id: 0, name: 'Any Category' }, ...action.categories],
       },
     };
   case SAVE_SETTINGS:
