@@ -12,8 +12,8 @@ class Ranking extends React.Component {
         {ranking
           .sort((a, b) => b.score - a.score)
           .map((eachRanking, index) => (
-            <div key={ index }>
-              <img src={ eachRanking.picture } alt="esquilo" />
+            <div key={ index } className="wrap-player-ranking">
+              <img src={ eachRanking.picture } alt="esquilo" className="img-ranking" />
               <p data-testid={ `player-name-${index}` }>{eachRanking.name}</p>
               <p data-testid={ `player-score-${index}` }>{eachRanking.score}</p>
             </div>

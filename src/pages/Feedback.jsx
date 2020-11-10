@@ -52,6 +52,7 @@ class Feedback extends React.Component {
             type="button"
             data-testid="btn-ranking"
             onClick={ reset }
+            className="bt_margin"
           >
             VER RANKING
           </button>

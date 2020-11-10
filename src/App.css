@@ -1,9 +1,10 @@
 .content-wrap {
   color: rgb(97, 38, 165);
   margin: 50px;
-  padding: 50px;
+  padding: 30px;
   border-radius: 20px;
   background-color: rgb(255, 255, 255);
+  text-align: center;
 }
 
 button {
@@ -24,4 +25,41 @@ button {
 
 .alternatives button {
   width: 24%;
+}
+
+.bt_margin {
+  margin-right: 20px;
+}
+
+.wrap-player-ranking {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ width: 600px;
+ padding: 5px 100px;
+ margin: 10px auto;
+ background-color: rgb(240, 240, 240);
+ border-radius: 10px;
+}
+
+.img-ranking {
+  border-radius: 100%;
+  border: 3px solid white
+  }
+
+select {
+  border: 1px solid rgba(255, 0, 0, 0.767);
+  background: rgba(255, 255, 255, 0.925);
+  border-radius: 8px;
+  color: rgb(5, 31, 31);
+  padding: 20px 15px;
+  font-size: 20px;
+  width: 90%;
+  margin-top: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.buttons_settings {
+  margin-top: 20px;
 }

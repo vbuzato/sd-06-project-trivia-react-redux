@@ -58,10 +58,12 @@ class Settings extends React.Component {
               </option>))}
           </select>
         </label>
-        <button type="button" onClick={ () => confirm(category, difficulty, type) }>
+        <div className="buttons_settings">
+          <button className="bt_margin" type="button" onClick={ () => confirm(category, difficulty, type) }>
           Confirmar
-        </button>
-        <Link to="/"><button type="button">Voltar</button></Link>
+          </button>
+          <Link to="/"><button type="button">Voltar</button></Link>
+        </div>
       </div>
     );
   }

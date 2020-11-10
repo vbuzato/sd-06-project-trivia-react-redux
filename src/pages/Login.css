@@ -68,8 +68,9 @@
   border: none;
   color: rgb(255, 214, 214);
   margin-top: 30px;
-  width: 200px;
+  width: 150px;
   height: 70px;
+  outline: none;
 }
 
 .bt-jogar {
@@ -81,4 +82,9 @@ button:disabled {
   pointer-events: none;
   cursor: default;
   opacity: 0.3;
+}
+
+.volume {
+  position: absolute;
+  top: 70px;
 }

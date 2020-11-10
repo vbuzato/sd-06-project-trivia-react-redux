@@ -6,19 +6,38 @@ import { Link } from 'react-router-dom';
 import './Login.css';
 import { GoSettings } from 'react-icons/go';
 import { AiFillPlayCircle } from 'react-icons/ai';
+import { MdVolumeOff, MdVolumeUp } from 'react-icons/md';
+// import { Howl, Howler } from 'howler';
+// import LoginSound from '../audio/007-login.mp3';
 import { userHash, userInfo, fetchToken } from '../actions';
 
 class Login extends React.Component {
   constructor() {
     super();
 
+    this.play = this.play.bind(this);
+
     this.state = {
       email: '',
       name: '',
+      isPlaying: false,
     };
-
     this.handleChange = this.handleChange.bind(this);
     this.onClick = this.onClick.bind(this);
+
+    // const sound = new Howl({
+    //   src: [LoginSound],
+    //   autoplay: true,
+    //   loop: true,
+    //   volume: 0.7,
+    // });
+    // sound.once('load', () => {
+    //   sound.play();
+    // });
+  }
+
+  componentDidMount() {
+    console.log('did Mount');
   }
 
   onClick(event) {
@@ -35,8 +54,19 @@ class Login extends React.Component {
     this.setState({ [target.name]: target.value });
   }
 
+  play() {
+    const { isPlaying } = this.state;
+    // if (isPlaying) {
+    //   sound.stop();
+    // } else {
+    //   sound.play();
+    // }
+    // console.log('play func');
+    this.setState({ isPlaying: !isPlaying });
+  }
+
   render() {
-    const { name, email } = this.state;
+    const { name, email, isPlaying } = this.state;
     const isEnable = !((name && email));
     let disabled = '';
     if (isEnable) disabled = 'disabled';
@@ -46,7 +76,7 @@ class Login extends React.Component {
           <div className="wrap-600">
             <h1>Trivia Game</h1>
             <label htmlFor="email">
-          Email do Gravatar:
+              Email do Gravatar:
               <input
                 id="email"
                 type="email"
@@ -57,7 +87,7 @@ class Login extends React.Component {
               />
             </label>
             <label htmlFor="name">
-          Nome do Jogador:
+              Nome do Jogador:
               <input
                 id="name"
                 type="text"
@@ -88,6 +118,9 @@ class Login extends React.Component {
                   <GoSettings size="50" />
                 </button>
               </Link>
+              <button type="button" className="bt_login" onClick={ this.play }>
+                {(isPlaying) ? <MdVolumeOff size="50" /> : <MdVolumeUp size="50" />}
+              </button>
             </div>
           </div>
         </form>

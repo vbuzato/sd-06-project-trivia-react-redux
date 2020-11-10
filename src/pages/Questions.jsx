@@ -133,7 +133,7 @@ class Questions extends React.Component {
           {`Question: ${results[questionNumber].question}`}
         </h2>
         {this.alternatives(shuffledAnswers, results)}
-        <p>{time}</p>
+        <div className="timer"><p>{time}</p></div>
       </>
     );
   }
