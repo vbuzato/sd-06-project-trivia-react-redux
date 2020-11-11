@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import ReactAudioPlayer from 'react-audio-player';
 import Header from '../components/Header';
 import { sumNewPoints } from '../actions';
 import './Questions.css';
+import QuestionsSound from '../audio/007-questions.mp3';
 
 const INITIAL_TIME = 30;
 
@@ -188,6 +190,7 @@ class Questions extends React.Component {
         {(questionNumber === NUMBER_OF_QUESTIONS) ? <Redirect to="/feedback" /> : null}
         {(questionNumber === NUMBER_OF_QUESTIONS) ? this.resetState() : null}
         {(results[questionNumber]) ? this.question() : 'Loading...'}
+        <ReactAudioPlayer autoPlay loop src={ QuestionsSound } volume={ 0.5 } />
         <button
           type="button"
           disabled={ !answered }

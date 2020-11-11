@@ -2,7 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import ReactAudioPlayer from 'react-audio-player';
 import { saveSettings, fetchCategories } from '../actions';
+import LoginSound from '../audio/007-login.mp3';
 
 class Settings extends React.Component {
   constructor(props) {
@@ -33,6 +35,7 @@ class Settings extends React.Component {
     const { category, difficulty, type } = this.state;
     return (
       <div className="content-wrap">
+        <ReactAudioPlayer autoPlay loop src={ LoginSound } volume={ 0.5 } />
         <h1 data-testid="settings-title">CONFIGURAÇÕES</h1>
         <label htmlFor="categories">
           <select id="category" onChange={ this.handleChange } value={ category }>

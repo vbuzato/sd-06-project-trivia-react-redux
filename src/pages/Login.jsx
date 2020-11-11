@@ -7,37 +7,22 @@ import './Login.css';
 import { GoSettings } from 'react-icons/go';
 import { AiFillPlayCircle } from 'react-icons/ai';
 import { MdVolumeOff, MdVolumeUp } from 'react-icons/md';
-// import { Howl, Howler } from 'howler';
-// import LoginSound from '../audio/007-login.mp3';
+import ReactAudioPlayer from 'react-audio-player';
+import LoginSound from '../audio/007-login.mp3';
 import { userHash, userInfo, fetchToken } from '../actions';
 
 class Login extends React.Component {
   constructor() {
     super();
 
-    this.play = this.play.bind(this);
-
     this.state = {
       email: '',
       name: '',
-      isPlaying: false,
+      isPlaying: true,
     };
     this.handleChange = this.handleChange.bind(this);
     this.onClick = this.onClick.bind(this);
-
-    // const sound = new Howl({
-    //   src: [LoginSound],
-    //   autoplay: true,
-    //   loop: true,
-    //   volume: 0.7,
-    // });
-    // sound.once('load', () => {
-    //   sound.play();
-    // });
-  }
-
-  componentDidMount() {
-    console.log('did Mount');
+    this.play = this.play.bind(this);
   }
 
   onClick(event) {
@@ -56,12 +41,6 @@ class Login extends React.Component {
 
   play() {
     const { isPlaying } = this.state;
-    // if (isPlaying) {
-    //   sound.stop();
-    // } else {
-    //   sound.play();
-    // }
-    // console.log('play func');
     this.setState({ isPlaying: !isPlaying });
   }
 
@@ -119,7 +98,10 @@ class Login extends React.Component {
                 </button>
               </Link>
               <button type="button" className="bt_login" onClick={ this.play }>
-                {(isPlaying) ? <MdVolumeOff size="50" /> : <MdVolumeUp size="50" />}
+                {(isPlaying) ? <MdVolumeUp size="50" /> : <MdVolumeOff size="50" />}
+                {(isPlaying)
+                  ? <ReactAudioPlayer autoPlay loop src={ LoginSound } volume={ 0.5 } />
+                  : null}
               </button>
             </div>
           </div>
