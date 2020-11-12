@@ -197,7 +197,9 @@ class Questions extends React.Component {
       <div className="content-wrap">
         {(questionNumber === NUMBER_OF_QUESTIONS) ? <Redirect to="/feedback" /> : null}
         {(questionNumber === NUMBER_OF_QUESTIONS) ? this.resetState() : null}
-        {(results[questionNumber]) ? this.question() : <img src={ Loading } width="50%" alt="Loading" />}
+        {(results[questionNumber])
+          ? this.question()
+          : <img src={ Loading } width="50%" alt="Loading" />}
         <ReactAudioPlayer autoPlay loop src={ QuestionsSound } volume={ 0.5 } />
         <button
           type="button"
