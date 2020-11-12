@@ -84,6 +84,13 @@ class Questions extends React.Component {
     return buttonClass;
   }
 
+  fixChars(string) {
+    return string
+      .replace(/&quot;/g, '"')
+      .replace(/&#039;/g, '\'')
+      .replace(/&eacute;/g, 'é');
+  }
+
   alternatives(answers, results) {
     const dataIdIndex = [0, 1, 2];
     const { questionNumber, answered } = this.state;
@@ -103,7 +110,7 @@ class Questions extends React.Component {
             }
             onClick={ this.myChoice }
           >
-            { answer }
+            { this.fixChars(answer) }
           </button>
         ))}
       </div>
@@ -129,10 +136,10 @@ class Questions extends React.Component {
       <>
         <Header />
         <h3 data-testid="question-category">
-          {`Category: ${results[questionNumber].category}`}
+          {`Category: ${this.fixChars(results[questionNumber].category)}`}
         </h3>
         <h2 data-testid="question-text">
-          {`Question: ${results[questionNumber].question}`}
+          {`Question: ${this.fixChars(results[questionNumber].question)}`}
         </h2>
         {this.alternatives(shuffledAnswers, results)}
         <div className="timer"><p>{time}</p></div>

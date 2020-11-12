@@ -80,7 +80,6 @@ export const fetchCategories = () => async (dispatch) => {
   const requestCategories = await fetch(categoriesAPI);
   const categoriesObject = await requestCategories.json();
   const categories = categoriesObject.trivia_categories.map((category) => category);
-  console.log(categories);
   return dispatch(addCategories(categories));
 };
 
