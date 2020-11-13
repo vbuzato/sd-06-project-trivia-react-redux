@@ -2,9 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import ReactAudioPlayer from 'react-audio-player';
 import Header from '../components/Header';
 import { sumNewPoints } from '../actions';
 import './Questions.css';
+import QuestionsSound from '../audio/007-questions.mp3';
+import Loading from '../loading.gif';
 
 const INITIAL_TIME = 30;
 
@@ -14,6 +17,8 @@ class Questions extends React.Component {
     this.myChoice = this.myChoice.bind(this);
     this.timer = this.timer.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
+    this.resetState = this.resetState.bind(this);
+
     this.state = {
       questionNumber: 0,
       answered: false,
@@ -80,11 +85,18 @@ class Questions extends React.Component {
     return buttonClass;
   }
 
+  fixChars(string) {
+    return string
+      .replace(/&quot;/g, '"')
+      .replace(/&#039;/g, '\'')
+      .replace(/&eacute;/g, 'é');
+  }
+
   alternatives(answers, results) {
     const dataIdIndex = [0, 1, 2];
     const { questionNumber, answered } = this.state;
     return (
-      <div>
+      <div className="alternatives">
         {answers.map((answer, index) => (
           <button
             key={ index }
@@ -99,7 +111,7 @@ class Questions extends React.Component {
             }
             onClick={ this.myChoice }
           >
-            { answer }
+            { this.fixChars(answer) }
           </button>
         ))}
       </div>
@@ -124,14 +136,14 @@ class Questions extends React.Component {
     return (
       <>
         <Header />
-        <h2 data-testid="question-category">
-          {`Category: ${results[questionNumber].category}`}
-        </h2>
-        <h3 data-testid="question-text">
-          {`Question: ${results[questionNumber].question}`}
+        <h3 data-testid="question-category">
+          {`Category: ${this.fixChars(results[questionNumber].category)}`}
         </h3>
+        <h2 data-testid="question-text">
+          {`Question: ${this.fixChars(results[questionNumber].question)}`}
+        </h2>
         {this.alternatives(shuffledAnswers, results)}
-        <p>{time}</p>
+        <div className="timer"><p>{time}</p></div>
       </>
     );
   }
@@ -167,14 +179,28 @@ class Questions extends React.Component {
     this.startTimer();
   }
 
+  resetState() {
+    this.setState({
+      questionNumber: 0,
+      answered: false,
+      isShuffle: false,
+      shuffledAnswers: [],
+      time: INITIAL_TIME,
+    });
+  }
+
   render() {
     const { results } = this.props;
     const { answered, questionNumber } = this.state;
     const NUMBER_OF_QUESTIONS = 5;
     return (
-      <div>
+      <div className="content-wrap">
         {(questionNumber === NUMBER_OF_QUESTIONS) ? <Redirect to="/feedback" /> : null}
-        {(results[questionNumber]) ? this.question() : 'Loading...'}
+        {(questionNumber === NUMBER_OF_QUESTIONS) ? this.resetState() : null}
+        {(results[questionNumber])
+          ? this.question()
+          : <img src={ Loading } width="50%" alt="Loading" />}
+        <ReactAudioPlayer autoPlay loop src={ QuestionsSound } volume={ 0.5 } />
         <button
           type="button"
           disabled={ !answered }

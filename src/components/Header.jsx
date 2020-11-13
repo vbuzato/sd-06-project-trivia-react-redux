@@ -1,25 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import './Header.css';
 
 class Header extends React.Component {
   render() {
     const { hash, name, score } = this.props;
     return (
-      <header>
+      <header className="app-header">
         <img
           data-testid="header-profile-picture"
           src={ `https://www.gravatar.com/avatar/${hash}` }
           alt="foto perfil"
         />
-        <span
-          data-testid="header-player-name"
-        >
+        <span data-testid="header-player-name">
           { name }
         </span>
-        <span
-          data-testid="header-score"
-        >
+        <span className="header-score" data-testid="header-score">
           {score}
         </span>
       </header>

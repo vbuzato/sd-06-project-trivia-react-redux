@@ -2,8 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import ReactAudioPlayer from 'react-audio-player';
 import Header from '../components/Header';
 import { resetGame, addRanking } from '../actions';
+import FeedbackSound from '../audio/feedback.mp3';
 
 class Feedback extends React.Component {
   componentDidMount() {
@@ -27,7 +29,8 @@ class Feedback extends React.Component {
   render() {
     const { assertions, score, reset } = this.props;
     return (
-      <div>
+      <div className="content-wrap">
+        <ReactAudioPlayer autoPlay src={ FeedbackSound } volume={ 0.5 } />
         <div>
           <Header />
         </div>
@@ -52,6 +55,7 @@ class Feedback extends React.Component {
             type="button"
             data-testid="btn-ranking"
             onClick={ reset }
+            className="bt_margin"
           >
             VER RANKING
           </button>
