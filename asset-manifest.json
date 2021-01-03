@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/sd-06-project-trivia-react-redux/static/css/main.4fef7628.chunk.css",
+    "main.js": "/sd-06-project-trivia-react-redux/static/js/main.80d0e06b.chunk.js",
+    "main.js.map": "/sd-06-project-trivia-react-redux/static/js/main.80d0e06b.chunk.js.map",
+    "runtime-main.js": "/sd-06-project-trivia-react-redux/static/js/runtime-main.c44a877d.js",
+    "runtime-main.js.map": "/sd-06-project-trivia-react-redux/static/js/runtime-main.c44a877d.js.map",
+    "static/js/2.bcfba823.chunk.js": "/sd-06-project-trivia-react-redux/static/js/2.bcfba823.chunk.js",
+    "static/js/2.bcfba823.chunk.js.map": "/sd-06-project-trivia-react-redux/static/js/2.bcfba823.chunk.js.map",
+    "index.html": "/sd-06-project-trivia-react-redux/index.html",
+    "precache-manifest.d6bcfc2d8fa2afcf872dc8c0cd62302b.js": "/sd-06-project-trivia-react-redux/precache-manifest.d6bcfc2d8fa2afcf872dc8c0cd62302b.js",
+    "service-worker.js": "/sd-06-project-trivia-react-redux/service-worker.js",
+    "static/css/main.4fef7628.chunk.css.map": "/sd-06-project-trivia-react-redux/static/css/main.4fef7628.chunk.css.map",
+    "static/js/2.bcfba823.chunk.js.LICENSE": "/sd-06-project-trivia-react-redux/static/js/2.bcfba823.chunk.js.LICENSE",
+    "static/media/007-login.mp3": "/sd-06-project-trivia-react-redux/static/media/007-login.dd07c461.mp3",
+    "static/media/007-questions.mp3": "/sd-06-project-trivia-react-redux/static/media/007-questions.f14e07e7.mp3",
+    "static/media/feedback.mp3": "/sd-06-project-trivia-react-redux/static/media/feedback.37746763.mp3",
+    "static/media/loading.gif": "/sd-06-project-trivia-react-redux/static/media/loading.58607b10.gif",
+    "static/media/ranking.mp3": "/sd-06-project-trivia-react-redux/static/media/ranking.ec382311.mp3"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c44a877d.js",
+    "static/js/2.bcfba823.chunk.js",
+    "static/css/main.4fef7628.chunk.css",
+    "static/js/main.80d0e06b.chunk.js"
+  ]
+}
