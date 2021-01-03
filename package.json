@@ -1,4 +1,5 @@
 {
+  "homepage": "https://vbuzato.github.io/sd-06-project-trivia-react-redux",
   "name": "trivia-test",
   "version": "0.1.0",
   "private": true,
@@ -6,12 +7,17 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/user-event": "^7.1.2",
     "crypto-js": "^4.0.0",
+    "gh-pages": "^3.1.0",
+    "howler": "^2.2.1",
     "react": "^16.12.0",
+    "react-audio-player": "^0.14.0",
     "react-dom": "^16.12.0",
+    "react-icons": "^3.11.0",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
     "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
@@ -23,7 +29,9 @@
     "test:watch": "react-scripts test --watchAll",
     "eject": "react-scripts eject",
     "test-coverage": "react-scripts test --coverage --watchAll=false",
-    "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json ."
+    "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json .",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
